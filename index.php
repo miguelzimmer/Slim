@@ -32,8 +32,11 @@ $app->get('/cadastrar', function(Request $request, Response $response, array $ar
 
 $app->post('/cadastrarUsuario', function(Request $request, Response $response, array $args) use ($app) {
 
-    $test = $request->getParsedBody(); //getAttributes
-    echo json_encode($test);
+    $dados = $request->getParams(); //getAttributes
+    $dados["nome"];
+    $dados["email"];
+    $dados["senha"];
+    $dados["tipo"];
 
 //  $request->getParams();
 //     echo json_encode(['data']);

@@ -56,12 +56,7 @@
                 return false;
             }
 
-            let formData = new FormData();
-            formData.nome = nome;
-            formData.email = email;
-            formData.senha = senha;
-            formData.tipo = tipo;
-
+        
             let dados = {
                 nome: nome,
                 email: email,
@@ -73,8 +68,7 @@
                 url: './cadastrarUsuario',
                 method: 'POST',
                 data: dados,
-                dataType: 'json',
-                processData: false
+                dataType: 'json'
             }).done((data) => {
                 console.log(data);
             });
