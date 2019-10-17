@@ -54,5 +54,17 @@ class Usuario
             return false; // nao foi possivel logar
         }        
     }
+    public function listar($dados)
+    {
+        
+        $sql = $this->pdo->prepare("SELECT id_usuario, nome, email, tipo FROM usuarios VALUES(:id,:n,:e,:t)");
+        $sql->bindValue(":id", $dados["id_usuario"]);
+        $sql->bindValue(":n", $dados["nome"]);
+        $sql->bindValue(":e" ,($dados["email"]));
+        $sql->bindValue(":t", $dados["tipo"]);
+        $sql->execute();
+       
+        return ($sql->rowCount() > 0) ? $sql->fetchAll() : [];
+    }
     
 }
