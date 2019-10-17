@@ -20,27 +20,57 @@ $container['view'] = function(){
 };
 
 $app->get('/', function(Request $request, Response $response, array $args) {
+    return $this->view->render($response, 'login.html');});
 
-    return $this->view->render($response, 'login.html');
-});
-
-$app->get('/cadastrar', function(Request $request, Response $response, array $args) {
-    
+$app->get('/cadastrar', function(Request $request, Response $response, array $args) {    
     return $this->view->render($response, 'cadastrar.html');
-
 }); 
 
 $app->post('/cadastrarUsuario', function(Request $request, Response $response, array $args) use ($app) {
+    $dados = $request->getParams(); 
 
-    $dados = $request->getParams(); //getAttributes
-    $dados["nome"];
-    $dados["email"];
-    $dados["senha"];
-    $dados["tipo"];
+    require 'app/classes/Usuario.php';
 
-//  $request->getParams();
-//     echo json_encode(['data']);
+    $u = new Usuario();
+    $msg = $u->cadastrar($dados);
+    echo json_encode(["msg" => $msg]);
+});
+//rota por meio post para logar o usuario
+$app->post('/logarUsuario', function(Request $request, Response $response, array $args) use ($app) {
+    $dados = $request->getParams(); 
+
+    require "app/classes/Usuario.php";
+
+    $u = new Usuario();
+    $tipo = $u->logar($dados);
+
+    if ($tipo) {
+        echo json_encode(["tipo" => $tipo]);
+    } else {
+        echo json_encode(["msg" => "E-mail /ou senha incorretos!"]);
+    }    
+});
+    //rota para diretor
+    $app->get('/diretor', function(Request $request, Response $response, array $args) {    
+    
+        return $this->view->render($response, 'diretor.html');
+    
+    });
+
+    $app->get('/gerente', function(Request $request, Response $response, array $args) {    
+    
+        return $this->view->render($response, 'gerente.html');
+    
+    });
+    $app->get('/colaborador', function(Request $request, Response $response, array $args) {    
+    
+        return $this->view->render($response, 'colaborador.html');
+    
+    });
+
+
+$app->map(["GET", "POST"], "/datatablesDiretor", function() {
+
 });
 
 $app->run();
-

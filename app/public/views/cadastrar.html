@@ -36,14 +36,13 @@
             </p>    
             
             <div class="form-group">
-                <input type="button" id="btn-cadastrar" value="Cadastrar" class="btn  btn-lg btn-success login_btn">
+                <input type="button" id="btn-cadastrar" onclick="cadastrar()" value="Cadastrar" class="btn  btn-lg btn-success login_btn">
                 <button type="button"><a href="./">Sair</a></button>
             </div>
         </form>
     </div>
     <script>
-        $('#btn-cadastrar').on('click', (event) => {
-            event.preventDefault();
+        function cadastrar() {
 
             let nome = $('#nome').val();
             let email = $('#email').val();
@@ -52,10 +51,9 @@
             let tipo = $('input[name=tipo]').val();
 
             if (senha !== confSenha) {
-                alert('senhas não conferem');
+                alert('Senhas não condizem!');
                 return false;
             }
-
         
             let dados = {
                 nome: nome,
@@ -70,11 +68,9 @@
                 data: dados,
                 dataType: 'json'
             }).done((data) => {
-                console.log(data);
+                alert(data.msg);
             });
-
-        });
-
+        }
         
     </script>
 </body>

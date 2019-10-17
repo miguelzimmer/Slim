@@ -9,6 +9,7 @@
     <link rel="stylesheet" href="./css/style.css">
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
         integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+    <script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
     <title>Document</title>
 </head>
 <body>
@@ -17,19 +18,56 @@
         <h2 class="form-login-heading">Entre com o usuario</h2>
         <div class="form-group">
              <label for="inputEmail" class="sr-only">E-mail</label>
-             <input type="email" id="inputEmail"  name="email" class="form-control" placeholder="Email" required autofocus>
+             <input type="email" id="email"  name="email" class="form-control" placeholder="Email" required autofocus>
         </div>
          <div class="form-group">
             <label for="inputPassword" class="sr-only">Senha</label>
-            <input type="password" id="inputPassword" name="senha" class="form-control" placeholder="Senha" required>
+            <input type="password" id="senha" name="senha" class="form-control" placeholder="Senha" required>
         </div>
         <div class="form-group">
              <a href="cadastrar">Clique para casdastrar</a>   
         </div>
         <div class="form-group">
-            <input type="submit" value="Acessar" class="btn btn-lg btn-success login_btn">
+            <input type="button" onclick="logar()" value="Acessar" class="btn btn-lg btn-success login_btn">
         </div>
     </form>
+    <script>
+        // typeof
+        // arrow functions
+        let logar = () => {
+            let email = $('#email').val();
+            let senha = $('#senha').val();   
+            
+            let dados = {            
+                email: email,
+                senha: senha   
+            };
+
+            $.ajax({
+                url: './logarUsuario',
+                method: 'POST',
+                data: dados,
+                dataType: 'json'
+            }).done((data) => {
+                if (typeof data.msg === "string") {
+                    alert(data.msg);
+                    return false;
+                }
+
+                switch (data.tipo) {
+                    case 'D':
+                        window.location.href = 'diretor';
+                        break;
+                    case 'G':
+                        window.location.href = 'gerente';
+                        break;
+                    case 'C':
+                        window.location.href = 'colaborador';
+                        break;
+                }                
+            });
+        }
+    </script>
 </div>
 
 </body>

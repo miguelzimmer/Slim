@@ -10,10 +10,4 @@ $container['view'] = function(){
     return $view;
 };
 
-class HomeController{
-    public function index($resquest, $response, $args){
-      
-        return $this->view->render($response, 'index.php');
 
-    }
-};
