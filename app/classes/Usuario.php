@@ -46,10 +46,10 @@ class Usuario
 
         if($sql->rowCount() > 0) {
             //entrar no sistema (sessao)
-            $dado = $sql->fetch();// funçao fetch pega o que vem do banco e transforma em array
+            $dados = $sql->fetch();// funçao fetch pega o que vem do banco e transforma em array
             session_start();
-            $_SESSION['id_usuario'] = $dado['id_usuario'];
-            return $dado["tipo"]; //logado com sucesso
+            $_SESSION['id_usuario'] = $dados['id_usuario'];
+            return $dados["tipo"]; //logado com sucesso
         } else {
             return false; // nao foi possivel logar
         }

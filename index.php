@@ -75,11 +75,19 @@ $app->get('/listaUsuario', function(Request $request, Response $response, array 
     echo json_encode(["data" => $u->listar()]);
 });
 
-// $app->get('/listaProduto', function(Request $request, Response $response, array $args) use ($app) {
-//     require "app/classes/Produto.php";
-//     $p = new Produto();
-//     echo json_encode(["data" => $p->listar()]);
-// });
+ $app->get('/listaProdutos', function(Request $request, Response $response, array $args) use ($app) {
+     require "app/classes/Produto.php";
+    $p = new Produto();
+     echo json_encode(["data" => $p->listar()]);
+    });
+
+$app->post('/cadastrarProduto', function(Request $request, Response $response, array $args) use ($app) {
+    $dados = $request->getParams();
+    require 'app/classes/Produto.php';
+    $p = new Produto();
+    $msg = $p->cadastrar($dados);
+    echo json_encode(["msg" => $msg]);
+});
 
 $app->run();
 

@@ -52,7 +52,7 @@
                 if (typeof data.msg === "string") {
                     alert(data.msg);
                     return false;
-                }
+                }else{
 
                 switch (data.tipo) {
                     case 'D':
@@ -64,6 +64,7 @@
                     case 'C':
                         window.location.href = 'colaborador';
                         break;
+                    }
                 }
             });
         }
