@@ -3,20 +3,24 @@
 class Produto
 {
     private $pdo;
+    public $msgErro = "";
+
     public function __construct()
     {
         try {
             $this->pdo = new PDO("mysql:dbname=projeto;host=localhost", "root", "");
-        } catch (PDOException $e) {
-            echo  $e->getMessage();
         }
+            catch (PDOException $e) {
+            $msgErro = $e->getMessage();
+        }
+
     }
     public function cadastrar($dados = [])
     {
 
-         #Verificando se ja existe um produto cadastrado
+        #Verificando se ja existe um produto cadastrado
         $sql = $this->pdo->prepare("SELECT id_produto FROM produtos WHERE nome = :n");
-       #para alterar o (:n) da query utilizei o bindValue
+        #para alterar o (:n) da query utilizei o bindValue
         $sql->bindValue(":n",$dados["nome"]);
         $sql->execute();
          #Contando as linhas que vai vim do banco de dados

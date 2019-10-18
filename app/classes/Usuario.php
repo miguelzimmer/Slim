@@ -3,6 +3,7 @@
 class Usuario
 {
     private $pdo;
+    public $msgErro = "";
 
     public function __construct()
     {
