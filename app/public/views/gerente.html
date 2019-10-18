@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
+    <link rel="stylesheet" href="./app/public/views/css/gerente.css">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
+    integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+    <title>Pagina do Gerente</title>
+</head>
+<body>
+    <div class="container">
+            <form method="POST" class="form-produto">
+                <h2 class="form-login-heading">Cadastre um Produto</h2>
+                <div class="form-group">
+                    <input type="text" placeholder="Nome do Produto" id="nomeProduto" class="form-control" maxlength="30" name="nomeProduto" required autofocus>
+                </div>
+                <div class="form-group">
+                    <input type="number" id="valorUnitario" name="valorUnitario" class="form-control" placeholder="valor Unitario" maxlength="40" required >
+                </div>
+                <div class="form-group">
+                    <input type="number" id="quantidade" name="quantidade" class="form-control" placeholder="Quantidade do Produto" maxlength="32" required>
+                </div>
+                <div class="form-group">
+                    <input type="button" id="btn-cadastrar" onclick="cadastrar()" value="Cadastrar" class="btn  btn-lg btn-dark login_btn">
+                    <input type="button"  class="btn  btn-lg btn-dark login_btn" value="Sair" onclick="window.location.href='http://localhost/slim/'"/>
+                </div>
+            </form>
+        </div>
+        <script>
+            function cadastrar()
+            {
+                let nomeProduto = $('#nomeProduto').val();
+                let valorUnitario = $('#valorUnitario').val();
+                let quantidade =$('#quantidade').val();
+            }
+            let dados = {
+                nomeProduto: nomeProduto,
+                emavalorUnitarioil: valorUnitario,
+                quantidade: quantidade,
+            }
+            $.ajax({
+                url: './cadastrarUsuario',
+                method: 'POST',
+                data: dados,
+                dataType: 'json'
+            })
+    </script>
+</body>
+</html>

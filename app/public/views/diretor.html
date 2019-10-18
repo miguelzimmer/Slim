@@ -5,9 +5,9 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <link rel="stylesheet" href="https://cdn.datatables.net/1.10.20/css/jquery.dataTables.min.css">
-    <script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>  
-    <script src="https://cdn.datatables.net/1.10.20/js/jquery.dataTables.min.js"></script>   
-     <title>Pgaina do Diretor</title>
+    <script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
+    <script src="https://cdn.datatables.net/1.10.20/js/jquery.dataTables.min.js"></script>
+     <title>Pagina do Diretor</title>
 </head>
 <body>
     <table id="usuarios" class="display" style="width:100%">
@@ -18,12 +18,12 @@
                 <th>E-mail</th>
                 <th>Tipo</th>
             </tr>
-        </thead>    
+        </thead>
     </table>
     <script>
         $(document).ready(() => {
-            $('#usuarios').DataTable({			
-                "ajax": "./listaUsuario",        
+            $('#usuarios').DataTable({
+                "ajax": "./listaUsuario",
                 "columns": [
                     { "data": "id_usuario" },
                     { "data": "nome" },

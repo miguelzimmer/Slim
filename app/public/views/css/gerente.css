@@ -1,0 +1,18 @@
+body {
+    background-color: #999 !important;
+}
+
+.form-produto {
+    max-width: 800px;
+    height: 283px;
+    width: 0 auto !important;
+    background-color: #fff;
+    padding: 15px 16px;
+    margin-left: auto;
+    margin-right: auto;
+    margin-top: 10%;
+    border-radius: 5px;
+    box-shadow: 5px 5px 9px #555;
+
+
+}
