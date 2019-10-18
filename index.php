@@ -11,70 +11,77 @@ $app = new \Slim\App([
     ]
 ]);
 
-    $container = $app->getContainer();
-    $container['view'] = function(){
-        $view = new \Slim\Views\Twig('./app/public/views',[
+$container = $app->getContainer();
+
+$container['view'] = function() {
+    $view = new \Slim\Views\Twig('./app/public/views',[
         'cache'=> false
     ]);
-        return $view;
-    };
 
-    $app->get('/', function(Request $request, Response $response, array $args) {
-        return $this->view->render($response, 'login.html');});
+    return $view;
+};
 
-    $app->get('/cadastrar', function(Request $request, Response $response, array $args) {    
-        return $this->view->render($response, 'cadastrar.html');
-    }); 
+$app->get('/', function(Request $request, Response $response, array $args) {
+    return $this->view->render($response, 'login.html');
+});
 
-    $app->post('/cadastrarUsuario', function(Request $request, Response $response, array $args) use ($app) {
-        $dados = $request->getParams(); 
+$app->get('/cadastrar', function(Request $request, Response $response, array $args) {
+    return $this->view->render($response, 'cadastrar.html');
+});
 
-        require 'app/classes/Usuario.php';
+$app->post('/cadastrarUsuario', function(Request $request, Response $response, array $args) use ($app) {
+    $dados = $request->getParams();
 
-        $u = new Usuario();
-        $msg = $u->cadastrar($dados);
-        echo json_encode(["msg" => $msg]);
-    });
-    //rota por meio post para logar o usuario
-    $app->post('/logarUsuario', function(Request $request, Response $response, array $args) use ($app) {
-        $dados = $request->getParams(); 
+    require 'app/classes/Usuario.php';
 
-        require "app/classes/Usuario.php";
+    $u = new Usuario();
+    $msg = $u->cadastrar($dados);
+    echo json_encode(["msg" => $msg]);
+});
 
-        $u = new Usuario();
-        $tipo = $u->logar($dados);
+//rota por meio post para logar o usuario
+$app->post('/logarUsuario', function(Request $request, Response $response, array $args) use ($app) {
+    $dados = $request->getParams();
 
-     if ($tipo) {
-            echo json_encode(["tipo" => $tipo]);
-        }else{
-            echo json_encode(["msg" => "E-mail /ou senha incorretos!"]);
-        }    
-    });
-    //rota para diretor
-    $app->get('/diretor', function(Request $request, Response $response, array $args) {    
-    
-        return $this->view->render($response, 'diretor.html');
-    
-    });
+    require "app/classes/Usuario.php";
 
-    $app->get('/gerente', function(Request $request, Response $response, array $args) {    
-    
-        return $this->view->render($response, 'gerente.html');
-    
-    });
-    $app->get('/colaborador', function(Request $request, Response $response, array $args) {    
-    
-        return $this->view->render($response, 'colaborador.html');
-    
-    });
-    $app->post('/listaUsuario', function(Request $request, Response $response, array $args) use ($app){
-       
+    $u = new Usuario();
+    $tipo = $u->logar($dados);
 
-        require "app/classes/Usuario.php";
-        $u = new Usuario(); 
-        $dados = $request->getParams();
-        $u->listar($dados);
-   
-    });
+    if ($tipo) {
+        echo json_encode(["tipo" => $tipo]);
+    }else{
+        echo json_encode(["msg" => "E-mail /ou senha incorretos!"]);
+    }
+});
+
+//rota para diretor
+$app->get('/diretor', function(Request $request, Response $response, array $args) {
+    return $this->view->render($response, 'diretor.html');
+});
+
+$app->get('/gerente', function(Request $request, Response $response, array $args) {
+
+    return $this->view->render($response, 'gerente.html');
+
+});
+$app->get('/colaborador', function(Request $request, Response $response, array $args) {
+    return $this->view->render($response, 'colaborador.html');
+});
+
+$app->get('/listaUsuario', function(Request $request, Response $response, array $args) use ($app) {
+    require "app/classes/Usuario.php";
+    $u = new Usuario();
+    echo json_encode(["data" => $u->listar()]);
+});
+
+// $app->get('/listaProduto', function(Request $request, Response $response, array $args) use ($app) {
+//     require "app/classes/Produto.php";
+//     $p = new Produto();
+//     echo json_encode(["data" => $p->listar()]);
+// });
 
 $app->run();
+
+
+// nome, valor_unitario, quantidade

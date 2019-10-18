@@ -22,19 +22,16 @@
     </table>
     <script>
         $(document).ready(() => {
-    $('#usuarios').DataTable({			
-        "ajax": "./listaUsuario",
-        "type": "POST", 
-        "columns": [
-            { "data": "id_usuario" },
-            { "data": "nome" },
-            { "data": "email" },
-            { "data": "tipo" },
-        ]
-            }).done((data) => {
-               $dados = data;
+            $('#usuarios').DataTable({			
+                "ajax": "./listaUsuario",        
+                "columns": [
+                    { "data": "id_usuario" },
+                    { "data": "nome" },
+                    { "data": "email" },
+                    { "data": "tipo" },
+                ]
+            });
         });
-    });
     </script>
 </body>
 </html>

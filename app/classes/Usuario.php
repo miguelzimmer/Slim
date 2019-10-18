@@ -1,6 +1,6 @@
 <?php
 
-class Usuario 
+class Usuario
 {
     private $pdo;
 
@@ -31,7 +31,7 @@ class Usuario
             $sql->bindValue(":s" ,md5($dados["senha"]));
             $sql->bindValue(":t", $dados["tipo"]);
             $sql->execute();
-            
+
             return "Usuário cadastrado com sucesso!";
         }
     }
@@ -49,22 +49,16 @@ class Usuario
             $dado = $sql->fetch();// funçao fetch pega o que vem do banco e transforma em array
             session_start();
             $_SESSION['id_usuario'] = $dado['id_usuario'];
-            return $dado["tipo"]; //logado com sucesso                
+            return $dado["tipo"]; //logado com sucesso
         } else {
             return false; // nao foi possivel logar
-        }        
+        }
     }
-    public function listar($dados)
+    public function listar()
     {
-        
-        $sql = $this->pdo->prepare("SELECT id_usuario, nome, email, tipo FROM usuarios VALUES(:id,:n,:e,:t)");
-        $sql->bindValue(":id", $dados["id_usuario"]);
-        $sql->bindValue(":n", $dados["nome"]);
-        $sql->bindValue(":e" ,($dados["email"]));
-        $sql->bindValue(":t", $dados["tipo"]);
-        $sql->execute();
-       
+        $sql = $this->pdo->query("SELECT id_usuario, nome, email, tipo FROM usuarios", PDO::FETCH_ASSOC);
+
         return ($sql->rowCount() > 0) ? $sql->fetchAll() : [];
     }
-    
+
 }

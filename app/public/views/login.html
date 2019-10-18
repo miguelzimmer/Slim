@@ -6,7 +6,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <link rel="stylesheet" href="css/style.css">
+    <link rel="stylesheet" href="./app/public/views/css/login.css">
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
         integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
     <script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
@@ -15,7 +15,7 @@
 <body>
 <div class="container">
     <form method="POST" class="form-login">
-        <h2 class="form-login-heading">Entre com o usuario</h2>
+        <h2 class="form-login-heading">Faça Login!</h2>
         <div class="form-group">
              <label for="inputEmail" class="sr-only">E-mail</label>
              <input type="email" id="email"  name="email" class="form-control" placeholder="Email" required autofocus>
@@ -25,10 +25,10 @@
             <input type="password" id="senha" name="senha" class="form-control" placeholder="Senha" required>
         </div>
         <div class="form-group">
-             <a href="cadastrar">Clique para casdastrar</a>   
+             <a href="cadastrar">Cadastre um novo usuário</a>
         </div>
         <div class="form-group">
-            <input type="button" onclick="logar()" value="Acessar" class="btn btn-lg btn-success login_btn">
+            <input type="button" onclick="logar()" value="Acessar" class="btn btn-lg btn-primary login_btn">
         </div>
     </form>
     <script>
@@ -36,11 +36,11 @@
         // arrow functions
         let logar = () => {
             let email = $('#email').val();
-            let senha = $('#senha').val();   
-            
-            let dados = {            
+            let senha = $('#senha').val();
+
+            let dados = {
                 email: email,
-                senha: senha   
+                senha: senha
             };
 
             $.ajax({
@@ -64,7 +64,7 @@
                     case 'C':
                         window.location.href = 'colaborador';
                         break;
-                }                
+                }
             });
         }
     </script>
