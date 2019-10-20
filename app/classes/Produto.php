@@ -3,7 +3,7 @@
 class Produto
 {
     private $pdo;
-    public $msgErro = "";
+    public $msg = "";
 
     public function __construct()
     {
@@ -11,7 +11,7 @@ class Produto
             $this->pdo = new PDO("mysql:dbname=projeto;host=localhost", "root", "");
         }
             catch (PDOException $e) {
-            $msgErro = $e->getMessage();
+            $msg = $e->getMessage();
         }
 
     }
@@ -28,9 +28,9 @@ class Produto
              return "Produto já cadastrado!";  // ja esta cadastrado
          } else {
              // caso nao, Cadastrar
-             $sql = $this->pdo->prepare("INSERT INTO produtos (nome,valor_unitario,quantidade) VALUES(:n,:v,:q)");
+             $sql = $this->pdo->prepare("INSERT INTO produtos (nome,valor,quantidade) VALUES(:n,:v,:q)");
              $sql->bindValue(":n", $dados["nome"]);
-             $sql->bindValue(":v", $dados["valor_unitario"]);
+             $sql->bindValue(":v", $dados["valor"]);
              $sql->bindValue(":q", $dados["quantidade"]);
              $sql->execute();
 
@@ -39,7 +39,7 @@ class Produto
      }
      public function listar()
     {
-        $sql = $this->pdo->query("SELECT id_produto, nome, valor_unitario, quantidade FROM produtos", PDO::FETCH_ASSOC);
+        $sql = $this->pdo->query("SELECT id_produto, nome, valor, quantidade FROM produtos", PDO::FETCH_ASSOC);
 
         return ($sql->rowCount() > 0) ? $sql->fetchAll() : [];
     }

@@ -47,7 +47,7 @@
             let email = $('#email').val();
             let senha = $('#senha').val();
             let confSenha = $('#confSenha').val();
-            let tipo = $('input[name=tipo]').val();
+            let tipo = $("input[name='tipo']:checked").val();
 
             if (senha !== confSenha) {
                 alert('Senhas não condizem!');

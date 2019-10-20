@@ -3,14 +3,16 @@
 class Usuario
 {
     private $pdo;
-    public $msgErro = "";
+
+
 
     public function __construct()
     {
+
         try {
             $this->pdo = new PDO("mysql:dbname=projeto;host=localhost", "root", "");
         } catch (PDOException $e) {
-            $msgErro = $e->getMessage();
+             $e->getMessage();
         }
     }
 
