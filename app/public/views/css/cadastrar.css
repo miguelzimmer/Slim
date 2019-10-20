@@ -1,0 +1,27 @@
+body {
+    background-color: #999 !important;
+}
+
+.form-login {
+    max-width: 600px;
+    width: 100%;
+    background-color: #fff;
+    padding: 10px 10px;
+    margin-left: auto;
+    margin-right: auto;
+    margin-top: 24%;
+    border-radius: 5px;
+    box-shadow: 5px 5px 9px #555;
+
+}
+
+.form-login-heading {
+    text-align: center;
+}
+
+.form-group-button {
+    display: flex;
+    width: 50px;
+    padding: 10px 10px;
+}
+

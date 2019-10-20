@@ -51,7 +51,7 @@ class Usuario
             //entrar no sistema (sessao)
             $dados = $sql->fetch();// funçao fetch pega o que vem do banco e transforma em array
             session_start();
-            $_SESSION['id_usuario'] = $dados['id_usuario'];
+            $_SESSION['tipo'] = $dados['tipo'];
             return $dados["tipo"]; //logado com sucesso
         } else {
             return false; // nao foi possivel logar

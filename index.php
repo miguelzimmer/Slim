@@ -89,6 +89,12 @@ $app->post('/cadastrarProduto', function(Request $request, Response $response, a
     echo json_encode(["msg" => $msg]);
 });
 
+$app->get('/deslogar',function(Request $request, Response $response, array $args){
+    session_start();
+    unset($_SESSION['tipo']);
+    return $this->view->render($response, 'login.html');
+});
+
 $app->run();
 
 
