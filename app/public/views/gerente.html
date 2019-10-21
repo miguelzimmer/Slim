@@ -13,7 +13,7 @@
     <script src="https://cdn.datatables.net/1.10.20/js/jquery.dataTables.min.js"></script>
     <title>Pagina do Gerente</title>
 </head>
-<body>
+<body><!--formulario para cadastar produto-->
     <div class="container">
         <form method="POST" class="form-produto">
             <h2 class="form-login-heading">Cadastre um Produto</h2>
@@ -27,11 +27,12 @@
                 <input type="number" id="quantidade" name="quantidade" class="form-control" placeholder="Quantidade do Produto" maxlength="32" required>
             </div>
             <div class="form-group">
+                <!--inputs com onclick para chamar as funçoes-->
                 <input type="button" id="btn-cadastrar" onclick="cadastrarProduto()" value="Cadastrar" class="btn  btn-lg btn-dark login_btn">
                 <input type="button"  class="btn btn-lg btn-dark login_btn" value="Sair" onclick="sair()"/>
             </div>
         </form>
-        <br/>
+        <br/><!--tabela com id para o dataTables-->
         <table id="produtos" class="display" style="width:100%">
             <thead>
                 <tr>
@@ -44,8 +45,9 @@
         </table>
     </div>
     <script>
+        // variavel declarada pra usar futuramente!
         let table = null;
-
+        // pegando id da tabela e passando os dados dos inputs pelo id e enviando para url
         $(document).ready(() => {
             table = $('#produtos').DataTable({
                 "searching": false,
@@ -58,18 +60,14 @@
                 ]
             });
         });
-
+        // função cadastra produtos
         function cadastrarProduto()
         {
             let nome = $('#nome').val();
             let valor = $('#valor').val();
             let quantidade =$('#quantidade').val();
-
-            let dados = {
-                nome: nome,
-                valor: valor,
-                quantidade: quantidade,
-            };
+             //passando dados para um array
+            let dados = {nome,valor,quantidade};
 
             $.ajax({
                 url: './cadastrarProduto',
@@ -84,7 +82,7 @@
                 table.ajax.reload(); // atualiza a tabela
             });
         }
-
+        //função sair para deslogar da tela
         function sair() {
             $.ajax({
                 url: './logout',

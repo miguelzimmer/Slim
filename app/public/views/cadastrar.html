@@ -1,6 +1,6 @@
 
 <!DOCTYPE html>
-<html lang="en">
+<html lang="pt-br">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -11,7 +11,7 @@
     <link rel="stylesheet" href="./app/public/views/css/cadastrar.css">
     <title>Cadastro novo usuario</title>
 </head>
-<body>
+<body><!--formulario para cadastor de usuarios-->
     <div class="container">
         <form method="POST" class="form-login">
             <h2 class="form-login-heading">Cadastre seu usuario</h2>
@@ -27,14 +27,14 @@
             <div class="form-group">
                 <input type="password" id="confSenha" name="confSenha" class="form-control" placeholder="Confirma Senha" maxlength="32" required><br>
             </div>
-
+            <!--setando o tipo de usuario-->
             <label>Escolha seu cargo:</label>
             <p>
                 <input type="radio" name="tipo" value="D" required> Diretor
                 <input type="radio" name="tipo" value="G"> Gerente
                 <input type="radio" name="tipo" value="C"> Colaborador
             </p>
-
+            <!-- botãao com função onclick para chamar o cadastrar()-->
             <div class="form-group-button">
                 <input type="button" id="btn-cadastrar" onclick="cadastrar()" value="Cadastrar" class="btn  btn-lg btn-dark login_btn">
                 <input type="button"  class="btn  btn-lg btn-dark login_btn" value="Sair" onclick="window.location.href='http://localhost/slim/'"/>
@@ -42,26 +42,22 @@
         </form>
     </div>
     <script>
+        //função cadastrar do botão
         function cadastrar() {
-
+            //pegando os valores dos inputs
             let nome = $('#nome').val();
             let email = $('#email').val();
             let senha = $('#senha').val();
             let confSenha = $('#confSenha').val();
             let tipo = $("input[name='tipo']:checked").val();
-
+            //verificando senha e confirma senha condizem
             if (senha !== confSenha) {
                 alert('Senhas não condizem!');
-                return false;
+                return false; //retorna falso
             }
-
-            let dados = {
-                nome: nome,
-                email: email,
-                senha: senha,
-                tipo: tipo
-            };
-
+            //retorna verdadeiro, colocando dados em array
+            let dados = {nome,email,senha,tipo};
+            //utilizando ajax para enviar para a url cadastarUsuario
             $.ajax({
                 url: './cadastrarUsuario',
                 method: 'POST',

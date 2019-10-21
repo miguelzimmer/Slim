@@ -12,7 +12,7 @@
     <script src="https://cdn.datatables.net/1.10.20/js/jquery.dataTables.min.js"></script>
     <title>Pagina do colaborador</title>
 </head>
-<body>
+<body><!--tabela com id para o DataTables-->
     <div class="container">
         <table id="produtos" class="display" style="width:100%">
             <thead>
@@ -24,12 +24,16 @@
                 </tr>
             </thead>
         </table>
-        <div style="text-align: center;">
+        <!--div para exibir valor total pelo id-->
+        <div style="text-align: center">
             <h3>Valor Total</h3>
             <h5 id="valor-total"></h5>
         </div>
+        <div>
+            <input type="button"  class="btn btn-lg btn-dark login_btn" value="Sair" onclick="sair()"/>
+        </div>
     </div>
-    <script>
+    <script>//pegando id da tabela e passando os dados dos inputs pelo id e enviando para url
         $(document).ready(() => {
             $('#produtos').DataTable({
                 'searching': false,
@@ -41,15 +45,24 @@
                     { "data": "quantidade" },
                 ]
             });
-
+            // ajax passando os dados para url produtoTotal
             $.ajax({
                 url: './produtoTotal',
                 method: 'GET',
                 dataType: 'json',
             }).done((data) => {
+                //pega id do h5 e exibe dados do data
                 $('#valor-total').text('R$ ' + data.total);
             });
         });
+        function sair() {
+            $.ajax({
+                url: './logout',
+                method: 'POST',
+            }).done((data) => {
+                window.location.href = "/slim";
+            });
+        }
     </script>
 </body>
 </html>

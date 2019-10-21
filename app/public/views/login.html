@@ -13,7 +13,7 @@
     <title>Login</title>
 </head>
 <body>
-<div class="container">
+<div class="container"><!--formulario para logar usuario-->
     <form method="POST" class="form-login">
         <h2 class="form-login-heading">Faça Login!</h2>
         <div class="form-group">
@@ -32,16 +32,13 @@
         </div>
     </form>
     <script>
-        // typeof
-        // arrow functions
+
+        //função logar pegando os dados do input
         let logar = () => {
             let email = $('#email').val();
             let senha = $('#senha').val();
-
-            let dados = {
-                email: email,
-                senha: senha
-            };
+            //passando dados para um array
+            let dados = {email,senha};
 
             $.ajax({
                 url: './logarUsuario',
@@ -49,11 +46,12 @@
                 data: dados,
                 dataType: 'json'
             }).done((data) => {
+                // if verificando se o dado e uma string
                 if (typeof data.msg === "string") {
                     alert(data.msg);
                     return false;
                 }else{
-
+                //se verdadeiro, pega o tipo e direciona para pagina indicada!
                 switch (data.tipo) {
                     case 'D':
                         window.location.href = 'diretor';

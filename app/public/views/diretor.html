@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="pt-br">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -14,7 +14,7 @@
 
      <title>Pagina do Diretor</title>
 </head>
-<body>
+<body><!--tabela com id para o DataTables-->
     <div class="container">
         <table id="usuarios" class="display" style="width:100%">
             <thead>
@@ -27,25 +27,27 @@
             </thead>
         </table>
         <br/>
-        <form>
+        <form><!--input para exibir o id do usuario selecionado na tabela-->
             <div class="form-group">
                 <input type="text" placeholder="Código" id="id_usuario" class="form-control" name="id_usuario" readonly>
-            </div>
+            </div><!--input tipo radio para mudar o cargo do usuario-->
             <label>Atualize o cargo:</label>
             <p>
                 <input type="radio" name="tipo" value="D"> Diretor
                 <input type="radio" name="tipo" value="G"> Gerente
                 <input type="radio" name="tipo" value="C"> Colaborador
             </p>
-            <div class="form-group-button">
+            <div class="form-group-button"><!--botão com onclick para ao clicar chamar a função atualizar()-->
                 <input type="button" id="btn-atualizar" onclick="atualizar()" value="Atualizar" class="btn btn-lg btn-dark login_btn">
+                <!--botao com onclick pra chamar a funcao sair()-->
                 <input type="button"  class="btn btn-lg btn-dark login_btn" value="Sair" onclick="sair()"/>
             </div>
         </form>
     </div>
     <script>
+        // variavel declarada pra usar futuramente!
         let table = null;
-
+        // pegando id da tabela e passando os dados dos inputs pelo id e enviando para url
         $(document).ready(() => {
             table = $('#usuarios').DataTable({
                 'searching': false,
@@ -64,17 +66,18 @@
                 }
             });
 
+            //quando for selecionado na tabela, ele recebe o dado da linha selecionada
             table.on('select', function (e, dt, type, indexes) {
                 let dado = table.row({selected: true}).data();
                 $('#id_usuario').val(dado.id_usuario);
                 $("input[name='tipo'][value='"+dado.tipo+"']").prop('checked', true);
             });
         });
-
+        // função atualizar do botão atualizar,pega dos dados do selecionado e envia para url
         function atualizar() {
             let id_usuario = $('#id_usuario').val();
             let tipo = $("input[name='tipo']:checked").val();
-
+            //passando dados para um array
             let dados = { id_usuario, tipo };
 
             $.ajax({
@@ -84,10 +87,11 @@
                 dataType: 'json'
             }).done((data) => {
                 alert(data.msg);
+                //aqui ele recarrega a tabela para atualizar ela
                 table.ajax.reload();
             });
         }
-
+        //função para sair da tela
         function sair() {
             $.ajax({
                 url: './logout',
