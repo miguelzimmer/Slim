@@ -15,35 +15,62 @@
 </head>
 <body>
     <div class="container">
-            <form method="POST" class="form-produto">
-                <h2 class="form-login-heading">Cadastre um Produto</h2>
-                <div class="form-group">
-                    <input type="text" placeholder="Nome do Produto" id="nome" class="form-control" maxlength="30" name="nomeProduto" required autofocus>
-                </div>
-                <div class="form-group">
-                    <input type="number" id="valor" name="valor" class="form-control" placeholder="valor Unitario" maxlength="40" required >
-                </div>
-                <div class="form-group">
-                    <input type="number" id="quantidade" name="quantidade" class="form-control" placeholder="Quantidade do Produto" maxlength="32" required>
-                </div>
-                <div class="form-group">
-                    <input type="button" id="btn-cadastrar" onclick="cadastrarProduto()" value="Cadastrar" class="btn  btn-lg btn-dark login_btn">
-                    <input type="button"  class="btn  btn-lg btn-dark login_btn" value="Sair" onclick="window.location.href='deslogar'"/>
-                </div>
-            </form>
-        </div>
-        <script>
-            function cadastrarProduto()
-            {
-                let nome = $('#nome').val();
-                let valor = $('#valor').val();
-                let quantidade =$('#quantidade').val();
+        <form method="POST" class="form-produto">
+            <h2 class="form-login-heading">Cadastre um Produto</h2>
+            <div class="form-group">
+                <input type="text" placeholder="Nome do Produto" id="nome" class="form-control" maxlength="30" name="nomeProduto" required autofocus>
+            </div>
+            <div class="form-group">
+                <input type="number" id="valor" name="valor" class="form-control" placeholder="valor Unitario" maxlength="40" required >
+            </div>
+            <div class="form-group">
+                <input type="number" id="quantidade" name="quantidade" class="form-control" placeholder="Quantidade do Produto" maxlength="32" required>
+            </div>
+            <div class="form-group">
+                <input type="button" id="btn-cadastrar" onclick="cadastrarProduto()" value="Cadastrar" class="btn  btn-lg btn-dark login_btn">
+                <input type="button"  class="btn btn-lg btn-dark login_btn" value="Sair" onclick="sair()"/>
+            </div>
+        </form>
+        <br/>
+        <table id="produtos" class="display" style="width:100%">
+            <thead>
+                <tr>
+                    <th>Código</th>
+                    <th>Nome</th>
+                    <th>Valor</th>
+                    <th>Quantidade</th>
+                </tr>
+            </thead>
+        </table>
+    </div>
+    <script>
+        let table = null;
+
+        $(document).ready(() => {
+            table = $('#produtos').DataTable({
+                "searching": false,
+                "ajax": "./listaProdutos",
+                "columns": [
+                    { "data": "id_produto" },
+                    { "data": "nome" },
+                    { "data": "valor" },
+                    { "data": "quantidade" },
+                ]
+            });
+        });
+
+        function cadastrarProduto()
+        {
+            let nome = $('#nome').val();
+            let valor = $('#valor').val();
+            let quantidade =$('#quantidade').val();
 
             let dados = {
                 nome: nome,
                 valor: valor,
                 quantidade: quantidade,
             };
+
             $.ajax({
                 url: './cadastrarProduto',
                 method: 'POST',
@@ -51,41 +78,21 @@
                 dataType: 'json'
             }).done((data) => {
                 alert(data.msg);
-                data.clear();
-                data.draw();
+                $('#nome').val('');
+                $('#valor').val('');
+                $('#quantidade').val('');
+                table.ajax.reload(); // atualiza a tabela
+            });
+        }
 
+        function sair() {
+            $.ajax({
+                url: './logout',
+                method: 'POST',
+            }).done((data) => {
+                window.location.href = "/slim";
             });
         }
     </script>
-    <table id="produtos" class="display" style="width:100%">
-    <thead>
-        <tr>
-            <th>Código</th>
-            <th>Nome</th>
-            <th>Valor</th>
-            <th>Quantidade</th>
-        </tr>
-    </thead>
-</table>
-<script>
-     $(document).ready(() => {
-         $('#produtos').DataTable({
-            "ajax": "./listaProdutos",
-            "columns": [
-                { "data": "id_produto" },
-                { "data": "nome" },
-                { "data": "valor" },
-                { "data": "quantidade" },
-            ]
-        })
-
-    });
-
-
-
-
-
-</script>
-
 </body>
 </html>

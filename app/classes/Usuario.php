@@ -39,6 +39,15 @@ class Usuario
         }
     }
 
+    public function atualizar($dados = [])
+    {
+        $sql = $this->pdo->prepare("UPDATE usuarios SET tipo = :t WHERE id_usuario = :id");
+        $sql->bindValue(":t", $dados["tipo"]);
+        $sql->bindValue(":id", $dados["id_usuario"]);
+        $sql->execute();
+        return "Usuário atualizado com sucesso!";
+    }
+
     public function logar($dados = [])
     {
         //Verificar se o email e senha estao cadastrados,se sim

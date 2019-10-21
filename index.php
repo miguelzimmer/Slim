@@ -2,22 +2,21 @@
 
 use Psr\Http\Message\RequestInterface as Request;
 use Psr\Http\Message\ResponseInterface as Response;
-
+//chamando o arquivo autoload.php para utilizar as funçoes do Slim
 require_once 'vendor/autoload.php';
-
+//habilitando os erros detalhados para melhor visualizaçao
 $app = new \Slim\App([
     'settings' => [
         'displayErrorDetails' => true
     ]
 ]);
 
-$container = $app->getContainer();
 
+$container = $app->getContainer();
 $container['view'] = function() {
     $view = new \Slim\Views\Twig('./app/public/views',[
         'cache'=> false
     ]);
-
     return $view;
 };
 
@@ -39,6 +38,14 @@ $app->post('/cadastrarUsuario', function(Request $request, Response $response, a
     echo json_encode(["msg" => $msg]);
 });
 
+$app->post('/atualizarUsuario', function(Request $request, Response $response, array $args) use ($app) {
+    $dados = $request->getParams();
+    require 'app/classes/Usuario.php';
+    $u = new Usuario();
+    $msg = $u->atualizar($dados);
+    echo json_encode(["msg" => $msg]);
+});
+
 //rota por meio post para logar o usuario
 $app->post('/logarUsuario', function(Request $request, Response $response, array $args) use ($app) {
     $dados = $request->getParams();
@@ -57,14 +64,18 @@ $app->post('/logarUsuario', function(Request $request, Response $response, array
 
 //rota para diretor
 $app->get('/diretor', function(Request $request, Response $response, array $args) {
-    return $this->view->render($response, 'diretor.html');
+
+    // if (isset($_SESSION) && $_SESSION['tipo'] == 'D') {
+        return $this->view->render($response, 'diretor.html');
+    // } else {
+    //     return $this->view->render($response, 'permissao.html');
+    // }
 });
 
 $app->get('/gerente', function(Request $request, Response $response, array $args) {
-
     return $this->view->render($response, 'gerente.html');
-
 });
+
 $app->get('/colaborador', function(Request $request, Response $response, array $args) {
     return $this->view->render($response, 'colaborador.html');
 });
@@ -89,10 +100,15 @@ $app->post('/cadastrarProduto', function(Request $request, Response $response, a
     echo json_encode(["msg" => $msg]);
 });
 
-$app->get('/deslogar',function(Request $request, Response $response, array $args){
-    session_start();
+$app->get('/produtoTotal', function(Request $request, Response $response, array $args) use ($app) {
+    require "app/classes/Produto.php";
+    $p = new Produto();
+    echo json_encode(["total" => $p->getValorTotal()]);
+});
+
+$app->post('/logout',function(Request $request, Response $response, array $args){
     unset($_SESSION['tipo']);
-    return $this->view->render($response, 'login.html');
+    session_destroy();
 });
 
 $app->run();
